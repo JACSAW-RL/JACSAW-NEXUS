@@ -140,6 +140,62 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
+        /* AVISOS MODAL (qbittorrent + uBlock) */
+        .notice-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .notice-modal.open { display: flex; }
+        .notice-modal-card {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            max-width: 680px;
+            width: 100%;
+            border-radius: 12px;
+            padding: 20px 22px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-subtle);
+        }
+        .notice-modal-header { display:flex; align-items:center; gap:12px; }
+        .notice-modal-title { font-size:1.05rem; margin:0; color:var(--accent); }
+        .notice-modal-body { margin-top:12px; color:var(--text-secondary); line-height:1.4; }
+        .notice-modal-actions { margin-top:18px; display:flex; justify-content:flex-end; gap:10px; }
+        .notice-close-btn {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            padding: 8px 12px;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:600;
+        }
+        .notice-link-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--border-subtle);
+            padding: 8px 12px;
+            border-radius:8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap:8px;
+        }
+        .notice-installed-btn {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            padding: 8px 12px;
+            border-radius:8px;
+            cursor: pointer;
+            font-weight:600;
+            background: linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+        }
         /* Banner Profesional */
 .requirement-banner {
     background: var(--bg-secondary);
@@ -349,6 +405,17 @@
     </div>
     <a href="https://www.qbittorrent.org/download" target="_blank" class="banner-btn">
         Descargar qBitTorrent <span>→</span>
+    </a>
+</div>
+    <div class="requirement-banner" id="ublock-banner">
+    <div class="banner-content">
+        <span class="banner-icon">🔒</span>
+        <p>
+            <strong>RECOMENDADO:</strong> Se recomienda encarecidamente el uso de <span class="highlight">uBlock Origin Lite</span> para mejorar la privacidad y bloquear anuncios molestos.
+        </p>
+    </div>
+    <a href="https://github.com/gorhill/uBlock" target="_blank" class="banner-btn">
+        Más sobre uBlock Origin Lite <span>→</span>
     </a>
 </div>
     <div class="tutorials-container">
@@ -707,6 +774,41 @@
         <img src="" id="modal-img-content">
     </div>
 
+    <!-- ══════════════════════ NOTICE MODALS (QB + UBLOCK) ══════════════════════ -->
+    <div class="notice-modal" id="qb-modal" role="dialog" aria-modal="true" aria-labelledby="qb-title">
+        <div class="notice-modal-card">
+            <div class="notice-modal-header">
+                <div class="banner-icon">⚠️</div>
+                <h3 class="notice-modal-title" id="qb-title">Instalar qBitTorrent</h3>
+            </div>
+            <div class="notice-modal-body">
+                <p>Para seguir estos tutoriales es necesario tener instalado <strong>qBitTorrent</strong>. Recomendamos descargarlo desde la web oficial.</p>
+            </div>
+            <div class="notice-modal-actions">
+                <a class="notice-link-btn" href="https://www.qbittorrent.org/download" target="_blank">Descargar</a>
+                <button class="notice-installed-btn" id="qb-installed">Ya lo tengo instalado</button>
+                <button class="notice-close-btn" id="qb-close">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notice-modal" id="ublock-modal" role="dialog" aria-modal="true" aria-labelledby="ublock-title">
+        <div class="notice-modal-card">
+            <div class="notice-modal-header">
+                <div class="banner-icon">🔒</div>
+                <h3 class="notice-modal-title" id="ublock-title">Recomendado: uBlock Origin Lite</h3>
+            </div>
+            <div class="notice-modal-body">
+                <p>Se recomienda el uso de <strong>uBlock Origin Lite</strong> para bloquear anuncios y proteger la privacidad mientras navegas por mirrors y sitios de descargas.</p>
+            </div>
+            <div class="notice-modal-actions">
+                <a class="notice-link-btn" href="https://github.com/gorhill/uBlock" target="_blank">Más info</a>
+                <button class="notice-installed-btn" id="ublock-installed">Ya lo tengo instalado</button>
+                <button class="notice-close-btn" id="ublock-close">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ══════════════════════ PROFILE MODAL ══════════════════════ -->
     <div class="modal-overlay" id="profile-modal-overlay">
         <div class="modal profile-modal">
@@ -784,6 +886,53 @@
         modal.onclick = function() {
             modal.style.display = "none";
         }
+
+        // Avisos: mostrar modales de qbittorrent y uBlock en carga (secuencial), con opción de suprimir mediante "Ya lo tengo instalado"
+        const qbModal = document.getElementById('qb-modal');
+        const ublockModal = document.getElementById('ublock-modal');
+        const qbClose = document.getElementById('qb-close');
+        const ublockClose = document.getElementById('ublock-close');
+        const qbInstalledBtn = document.getElementById('qb-installed');
+        const ublockInstalledBtn = document.getElementById('ublock-installed');
+
+        function openQbModal() { if (qbModal) qbModal.classList.add('open'); }
+        function openUblockModal() { if (ublockModal) ublockModal.classList.add('open'); }
+
+        // Cerrar comportamiento: cierre simple que abre el siguiente modal si corresponde
+        qbClose && qbClose.addEventListener('click', () => {
+            qbModal.classList.remove('open');
+            setTimeout(() => { if (localStorage.getItem('ublock_installed') !== '1') openUblockModal(); }, 180);
+        });
+
+        ublockClose && ublockClose.addEventListener('click', () => {
+            ublockModal.classList.remove('open');
+        });
+
+        // Botones "Ya lo tengo instalado" que guardan bandera en localStorage para no volver a mostrar el pop-up
+        qbInstalledBtn && qbInstalledBtn.addEventListener('click', () => {
+            try { localStorage.setItem('qb_installed', '1'); } catch(e) {}
+            qbModal.classList.remove('open');
+            setTimeout(() => { if (localStorage.getItem('ublock_installed') !== '1') openUblockModal(); }, 180);
+        });
+
+        ublockInstalledBtn && ublockInstalledBtn.addEventListener('click', () => {
+            try { localStorage.setItem('ublock_installed', '1'); } catch(e) {}
+            ublockModal.classList.remove('open');
+        });
+
+        // Evitar que clics sobre la sombra cierren el contenido accidentalmente (mantener comportamiento controlado)
+        qbModal && qbModal.addEventListener('click', (e) => { if (e.target === qbModal) return; });
+        ublockModal && ublockModal.addEventListener('click', (e) => { if (e.target === ublockModal) return; });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const qbSuppressed = localStorage.getItem('qb_installed') === '1';
+            const uSuppressed = localStorage.getItem('ublock_installed') === '1';
+            if (!qbSuppressed) {
+                openQbModal();
+            } else if (!uSuppressed) {
+                openUblockModal();
+            }
+        });
     </script>
 
 </body>
