@@ -770,6 +770,38 @@ async function saveProfile() {
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
+    // Menú de navegación móvil
+    const navMenuToggle = document.getElementById('nav-menu-toggle');
+    const navMenuDropdown = document.getElementById('nav-menu-dropdown');
+    if (navMenuToggle && navMenuDropdown) {
+        navMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenuDropdown.classList.toggle('open');
+        });
+        
+        // Cerrar menú al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!navMenuToggle.contains(e.target) && !navMenuDropdown.contains(e.target)) {
+                navMenuDropdown.classList.remove('open');
+            }
+        });
+        
+        // Cerrar menú cuando se hace click en los links
+        navMenuDropdown.querySelectorAll('.nav-menu-item').forEach(item => {
+            if (item.tagName === 'A') {
+                item.addEventListener('click', () => {
+                    navMenuDropdown.classList.remove('open');
+                });
+            }
+        });
+        
+        // Event listener para el botón de tema móvil
+        document.getElementById('nav-theme-mobile')?.addEventListener('click', () => {
+            toggleTheme();
+            navMenuDropdown.classList.remove('open');
+        });
+    }
+
     // Forum search
     const searchInput = document.getElementById('forum-search');
     if (searchInput) {

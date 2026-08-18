@@ -894,6 +894,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebar:          document.getElementById('sidebar'),
         sidebarOverlay:   document.getElementById('sidebar-overlay'),
         sidebarToggle:    document.getElementById('sidebar-toggle'),
+        navMenuToggle:    document.getElementById('nav-menu-toggle'),
+        navMenuDropdown:  document.getElementById('nav-menu-dropdown'),
         detailModalOverlay: document.getElementById('detail-modal-overlay'),
         detailModalClose:   document.getElementById('detail-modal-close'),
         navCount:           document.getElementById('nav-count'),
@@ -945,6 +947,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         DOM.sidebarOverlay.classList.toggle('active', isOpen);
     });
     DOM.sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // Menú de navegación móvil (solo si existe)
+    if (DOM.navMenuToggle && DOM.navMenuDropdown) {
+        DOM.navMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            DOM.navMenuDropdown.classList.toggle('open');
+        });
+        
+        // Cerrar menú al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!DOM.navMenuToggle.contains(e.target) && !DOM.navMenuDropdown.contains(e.target)) {
+                DOM.navMenuDropdown.classList.remove('open');
+            }
+        });
+        
+        // Event listeners para los botones del menú móvil
+        document.getElementById('nav-stats-mobile')?.addEventListener('click', () => {
+            toggleStats();
+            DOM.navMenuDropdown.classList.remove('open');
+        });
+        document.getElementById('nav-theme-mobile')?.addEventListener('click', () => {
+            toggleTheme();
+            DOM.navMenuDropdown.classList.remove('open');
+        });
+        document.getElementById('nav-view-mobile')?.addEventListener('click', () => {
+            toggleView();
+            DOM.navMenuDropdown.classList.remove('open');
+        });
+    }
 
     // Modal detalle
     DOM.detailModalClose.addEventListener('click', closeDetailModal);

@@ -91,14 +91,29 @@
 <nav class="navbar">
     <a href="index.html" class="logo">Jacsaw Nexus</a>
     <div class="navbar-actions">
-        <a href="index.html" class="nav-btn" style="text-decoration:none;display:flex;align-items:center;">📑 Index</a>
-        <a href="tutoriales.html" class="nav-btn" style="text-decoration:none;display:flex;align-items:center;">📖 Tutoriales</a>
+        <!-- Links de navegación para desktop -->
+        <div class="nav-links-desktop">
+            <a href="index.html" class="nav-btn" style="text-decoration:none;display:flex;align-items:center;">📑 Index</a>
+            <a href="tutoriales.html" class="nav-btn" style="text-decoration:none;display:flex;align-items:center;">📖 Tutoriales</a>
+        </div>
+        
         <button class="nav-btn" id="btn-theme" title="Cambiar tema (T)">☀</button>
         <button class="nav-btn nav-btn--profile" id="btn-profile" title="Mi perfil" style="display:none">⊛ Perfil</button>
         <button class="nav-btn nav-btn--auth" id="btn-auth" title="Iniciar sesión">⊙ Login</button>
         <img id="auth-avatar" src="" alt="avatar"
              style="display:none;width:26px;height:26px;border-radius:50%;object-fit:cover;margin-left:2px;vertical-align:middle;cursor:pointer;"
              title="Ver perfil">
+        
+        <!-- Botón de menú para móvil -->
+        <button class="nav-menu-toggle" id="nav-menu-toggle" aria-label="Menú de navegación">☰</button>
+        
+        <!-- Menú desplegable para móvil -->
+        <div class="nav-menu-dropdown" id="nav-menu-dropdown">
+            <a href="index.html" class="nav-menu-item">📑 Index</a>
+            <a href="tutoriales.html" class="nav-menu-item">📖 Tutoriales</a>
+            <div class="nav-menu-divider"></div>
+            <button class="nav-menu-item nav-menu-btn" id="nav-theme-mobile" title="Cambiar tema">☀ Tema</button>
+        </div>
     </div>
 </nav>
 
