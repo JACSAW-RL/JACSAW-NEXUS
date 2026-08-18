@@ -149,25 +149,41 @@ function renderForumPosts(posts) {
         const tagsHtml = (post.tags || []).length
             ? `<div class="post-tags">${post.tags.map(t => `<span class="post-tag" onclick="event.stopPropagation();setTag('${escapeHtml(t)}')">${escapeHtml(t)}</span>`).join('')}</div>`
             : '';
+        const commentCount = post.commentCount || 0;
+        const voteCount = post.votes || 0;
+        const previewLength = 160;
+        const content = escapeHtml(post.content);
+        const contentPreview = content.substring(0, previewLength) + (content.length > previewLength ? '…' : '');
+        
         return `
-        <div class="post-item" onclick="viewPost('${post.postId}')">
+        <div class="post-item" onclick="viewPost('${post.postId}')" role="article">
             <div class="post-item-top">
-                <div class="post-title">${escapeHtml(post.title)}</div>
+                <h3 class="post-title">${escapeHtml(post.title)}</h3>
                 ${isOwner ? `
                 <button class="btn-delete-post" title="Eliminar mi publicación"
                     onclick="event.stopPropagation(); confirmDeletePost('${post.postId}', '${escapeHtml(post.title).replace(/'/g, "\\'")}')">
-                    🗑
+                    ✕
                 </button>` : ''}
             </div>
             <div class="post-meta">
-                <span class="post-meta-item">👤 <span class="post-author-link" onclick="event.stopPropagation(); viewUserProfile('${post.uid}')">${escapeHtml(post.author)}</span></span>
-                <span class="post-meta-item">📅 ${formatDate(post.created)}</span>
+                <span class="post-meta-item">
+                    <span>👤</span>
+                    <span class="post-author-link" onclick="event.stopPropagation(); viewUserProfile('${post.uid}')">${escapeHtml(post.author)}</span>
+                </span>
+                <span class="post-meta-item">
+                    <span>📅</span>
+                    <time>${formatDate(post.created)}</time>
+                </span>
+                <span class="post-meta-item">
+                    <span>💬</span>
+                    ${commentCount} ${commentCount === 1 ? 'respuesta' : 'respuestas'}
+                </span>
             </div>
             ${tagsHtml}
-            <div class="post-content">${escapeHtml(post.content.substring(0, 150))}${post.content.length > 150 ? '…' : ''}</div>
+            <p class="post-content">${contentPreview}</p>
             <div class="post-stats">
-                <span>💬 ${post.commentCount || 0} respuestas</span>
-                <span>👍 ${post.votes || 0} votos</span>
+                <span>💬 <strong>${commentCount}</strong> ${commentCount === 1 ? 'respuesta' : 'respuestas'}</span>
+                <span>👍 <strong>${voteCount}</strong> ${voteCount === 1 ? 'voto' : 'votos'}</span>
             </div>
         </div>`;
     }).join('');
