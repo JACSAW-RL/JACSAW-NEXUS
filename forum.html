@@ -7,347 +7,83 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="jacsaw-nexus.css">
     <style>
-        /* ── Layout ───────────────────────────── */
-        .forum-container { max-width: 1000px; margin: 80px auto; padding: 20px; }
-
-        .forum-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .forum-header h1 {
-            font-size: 2rem;
-            color: var(--accent);
-            font-family: var(--font-display);
-            margin: 0;
-        }
-
-        .forum-header-actions {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        /* ── Search & Filters ────────────────── */
-        .forum-search-bar {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .forum-search-wrap {
-            position: relative;
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .forum-search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-tertiary);
-            font-size: 0.9rem;
-            pointer-events: none;
-        }
-
-        #forum-search {
-            width: 100%;
-            padding: 10px 12px 10px 36px;
-            border: 1px solid var(--border-subtle);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border-radius: 8px;
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
-        }
-
-        #forum-search:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        #search-result-info {
-            font-size: 0.85rem;
-            color: var(--text-tertiary);
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        /* ── Tag Cloud ────────────────────────── */
-        .tag-cloud-wrap {
-            margin-bottom: 1.25rem;
-        }
-
-        .tag-cloud-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 0.5rem;
-        }
-
-        #tag-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-        }
-
-        .tag-chip {
-            padding: 4px 10px;
-            border: 1px solid var(--border-subtle);
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            border-radius: 20px;
-            font-size: 0.78rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font-body);
-        }
-
-        .tag-chip:hover { border-color: var(--accent); color: var(--accent); }
-        .tag-chip.active { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
-
-        .tag-count {
-            opacity: 0.7;
-            font-size: 0.7em;
-        }
-
-        /* ── Author Filter Bar ────────────────── */
-        .author-filter-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
+        .forum-container { max-width: 1000px; margin: 2rem auto; padding: 2rem; }
+        
+        .forum-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap; }
+        .forum-header h1 { font-size: 2rem; color: var(--accent); font-family: var(--font-display); margin: 0; font-weight: 700; }
+        .forum-header-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        
+        .forum-search-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; align-items: center; flex-wrap: wrap; }
+        .forum-search-wrap { position: relative; flex: 1; min-width: 200px; }
+        .forum-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 0.9rem; pointer-events: none; }
+        #forum-search { width: 100%; padding: 10px 12px 10px 36px; border: 1px solid var(--border-medium); background: var(--bg-secondary); color: var(--text-primary); border-radius: var(--radius); font-family: var(--font-body); font-size: 0.95rem; transition: var(--transition); }
+        #forum-search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+        
+        #search-result-info { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 1rem; display: none; }
+        
+        .tag-cloud-wrap { margin-bottom: 1.5rem; }
+        .tag-cloud-label { font-size: 0.7rem; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; }
+        #tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        
+        .tag-chip { padding: 5px 12px; border: 1px solid var(--border-subtle); background: var(--bg-tertiary); color: var(--text-secondary); border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: var(--transition); font-family: var(--font-body); font-weight: 500; }
+        .tag-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+        .tag-chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .tag-count { opacity: 0.6; font-size: 0.8em; }
+        
+        .author-filter-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem; background: var(--accent-glow); border: 1px solid var(--accent); border-radius: var(--radius); margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); flex-wrap: wrap; }
         .author-filter-bar strong { color: var(--accent); }
-
-        .author-filter-bar button {
-            border: none;
-            background: transparent;
-            color: var(--text-tertiary);
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
+        .author-filter-bar button { border: none; background: transparent; color: var(--text-tertiary); cursor: pointer; font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; transition: var(--transition); font-weight: 500; }
         .author-filter-bar button:hover { color: var(--danger); background: var(--bg-tertiary); }
-
-        /* ── Post Items ───────────────────────── */
-        .post-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius);
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .post-item:hover {
-            border-color: var(--accent);
-            background: var(--bg-tertiary);
-            transform: translateX(4px);
-        }
-
-        .post-item-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .post-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--text-primary);
-        }
-
-        .btn-delete-post {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            color: var(--text-tertiary);
-            padding: 2px 6px;
-            border-radius: 4px;
-            transition: var(--transition);
-            flex-shrink: 0;
-        }
-
-        .btn-delete-post:hover { color: var(--danger); background: rgba(220,38,38,0.1); }
-
-        .post-meta {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.82rem;
-            color: var(--text-tertiary);
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-        }
-
+        
+        .post-item { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; transition: var(--transition); }
+        .post-item:hover { border-color: var(--accent); background: var(--bg-hover); transform: translateX(2px); box-shadow: var(--shadow); }
+        
+        .post-item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem; }
+        .post-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-display); }
+        .btn-delete-post { background: transparent; border: none; cursor: pointer; font-size: 1rem; color: var(--text-tertiary); padding: 4px 8px; border-radius: 4px; transition: var(--transition); flex-shrink: 0; font-weight: 600; }
+        .btn-delete-post:hover { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
+        
+        .post-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 0.75rem; flex-wrap: wrap; }
         .post-meta-item { display: flex; align-items: center; gap: 4px; }
-
-        .post-author-link {
-            color: var(--accent);
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        .post-author-link { color: var(--accent); cursor: pointer; transition: var(--transition); font-weight: 500; }
         .post-author-link:hover { text-decoration: underline; }
-
-        .post-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.35rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .post-tag {
-            padding: 2px 8px;
-            background: rgba(124,58,237,0.15);
-            color: var(--accent);
-            border-radius: 12px;
-            font-size: 0.72rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .post-tag:hover { background: rgba(124,58,237,0.3); }
-
-        .post-content {
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-            font-size: 0.92rem;
-        }
-
-        .post-stats {
-            display: flex;
-            gap: 1.5rem;
-            font-size: 0.85rem;
-            color: var(--text-tertiary);
-        }
-
-        /* ── Loading ──────────────────────────── */
-        .loading-posts {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-tertiary);
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border-subtle);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            vertical-align: middle;
-            margin-right: 8px;
-        }
-
+        
+        .post-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+        .post-tag { padding: 2px 8px; background: var(--accent-glow); color: var(--accent); border-radius: 12px; font-size: 0.7rem; cursor: pointer; transition: var(--transition); font-weight: 500; }
+        .post-tag:hover { background: var(--accent); color: white; }
+        
+        .post-content { color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.6; font-size: 0.9rem; }
+        .post-stats { display: flex; gap: 1.5rem; font-size: 0.8rem; color: var(--text-tertiary); }
+        
+        .loading-posts { text-align: center; padding: 3rem 1rem; color: var(--text-tertiary); }
+        .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border-subtle); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 0.5rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* ── Empty State ──────────────────────── */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-tertiary);
-        }
+        
+        .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-tertiary); }
         .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
-
-        .btn-clear-filter {
-            margin-top: 1rem;
-            padding: 8px 16px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-primary);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-clear-filter:hover { border-color: var(--accent); color: var(--accent); }
-
-        /* ── Buttons ──────────────────────────── */
-        .btn-primary {
-            padding: 10px 20px;
-            background: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: var(--font-body);
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-        .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        
+        .btn-clear-filter { margin-top: 1rem; padding: 8px 16px; background: var(--bg-tertiary); border: 1px solid var(--border-subtle); color: var(--text-primary); border-radius: var(--radius); cursor: pointer; transition: var(--transition); font-weight: 500; }
+        .btn-clear-filter:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+        
+        .btn-primary { padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; font-family: var(--font-body); transition: var(--transition); font-size: 0.9rem; }
+        .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow); }
         .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-        .btn-secondary {
-            padding: 10px 20px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: var(--font-body);
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-        .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
-        /* ── Form Groups ──────────────────────── */
+        
+        .btn-secondary { padding: 10px 20px; background: transparent; color: var(--text-primary); border: 1px solid var(--border-subtle); border-radius: var(--radius); cursor: pointer; font-weight: 600; font-family: var(--font-body); transition: var(--transition); font-size: 0.9rem; }
+        .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+        
         .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: var(--text-primary); font-size: 0.9rem; }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-subtle);
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border-radius: 6px;
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            resize: vertical;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus { outline: none; border-color: var(--accent); }
-        .form-group textarea { min-height: 120px; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid var(--border-medium); background: var(--bg-tertiary); color: var(--text-primary); border-radius: var(--radius); font-family: var(--font-body); font-size: 0.9rem; resize: vertical; box-sizing: border-box; transition: var(--transition); }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+        .form-group textarea { min-height: 120px; line-height: 1.5; }
         .form-group select option { background: var(--bg-primary); }
-        .form-char-hint { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 4px; }
-
-        .form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.25rem; }
-
-        /* ── Modal Styles ─────────────────────── */
+        .form-char-hint { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.4rem; }
+        
+        .form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; flex-wrap: wrap; }
+        
         .modal-new-post { max-width: 600px; }
+    </style>
         .modal-title { font-size: 1.3rem; font-weight: bold; color: var(--text-primary); margin-bottom: 1.25rem; }
 
         /* ── Post Detail ──────────────────────── */
