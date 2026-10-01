@@ -23,7 +23,7 @@ Se implementó un **menú desplegable hamburguesa** que se activa en dispositivo
 ### Tablet (768px a 480px)
 ```
 ┌──────────────────────────────┐
-│ Jacsaw Nexus  ☀  ⊙  ☰       │
+│ Jacsaw Nexus  ☀  ⊙  ☰      │
 │ ┌─────────────────────────┐  │
 │ │ 📖 Tutoriales          │  │
 │ │ 💬 Foro                │  │
@@ -41,12 +41,12 @@ Se implementó un **menú desplegable hamburguesa** que se activa en dispositivo
 ### Móvil (480px e inferior)
 ```
 ┌──────────────────────────┐
-│ Nexus  ☀  ⊙  ☰          │
+│ Nexus          ☀  ⊙  ☰ │
 │ ┌──────────────────────┐ │
-│ │ 📖 Tutoriales       │ │
-│ │ 💬 Foro             │ │
-│ │ ────────────────── │ │
-│ │ ☀ Tema             │ │
+│ │ 📖 Tutoriales        │ │
+│ │ 💬 Foro              │ │
+│ │ ──────────────────   │ │
+│ │ ☀ Tema               │ │
 │ └──────────────────────┘ │
 └──────────────────────────┘
 ```
